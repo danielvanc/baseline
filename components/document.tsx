@@ -1,8 +1,8 @@
 "use client";
 import { useFormState } from "react-dom";
-import { teams } from "../config/teams";
-import SelectTeam from "../submissions/selectTeam";
-import { changeTeam } from "../actions/changeTeam";
+import { teams } from "@/config/teams";
+import SelectTeam from "@/submissions/selectTeam";
+import { changeTeam } from "@/actions/changeTeam";
 
 export default function Document({ children }: { children: React.ReactNode }) {
   const defaultBgGradient =
