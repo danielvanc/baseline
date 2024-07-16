@@ -1,32 +1,18 @@
 "use client";
-import { useFormState } from "react-dom";
+import React from "react";
 import { teams } from "@/config/teams";
-import { changeTeam } from "@/actions/changeTeam";
-import React, { useOptimistic } from "react";
+import { useChangeTheme } from "@/utils/optimistic";
+interface Props {
+  children: React.ReactNode;
+}
 
-export default function Document({ children }: { children: React.ReactNode }) {
-  const defaultBgGradient =
+export default function Document({ children }: Props) {
+  const { theme, action } = useChangeTheme();
+  const showAllTeams = theme;
+
+  const defaultBg =
     "bg-gradient-to-b from-orange-500 via-orange-700 to-orange-300";
-
-  const [formState, formAction] = useFormState(changeTeam, null);
-
-  async function selectTeam(formData: FormData) {
-    const team = formData.get("team");
-    addOptimistic({ team });
-    await formAction(formData);
-  }
-
-  const [optimisticState, addOptimistic] = useOptimistic(
-    formState,
-    (state, newState) => ({
-      ...state,
-      team: formState?.team || "all",
-    })
-  );
-
-  const showAllTeams = optimisticState?.team;
-
-  const classNames = !!showAllTeams ? "bg-brand-bg" : defaultBgGradient;
+  const classNames = !!showAllTeams ? "bg-brand-bg" : defaultBg;
 
   return (
     <body className={`h-screen ${classNames}`}>
@@ -34,7 +20,7 @@ export default function Document({ children }: { children: React.ReactNode }) {
         <nav>
           <h1>Baseline</h1>
           <div>
-            <form action={selectTeam}>
+            <form action={action}>
               <select
                 name="team"
                 onChange={(event) => event?.target?.form?.requestSubmit()}
