@@ -1,18 +1,31 @@
 "use client";
 import { useFormState } from "react-dom";
 import { teams } from "@/config/teams";
-import SelectTeam from "@/submissions/selectTeam";
 import { changeTeam } from "@/actions/changeTeam";
+import React, { useOptimistic } from "react";
 
 export default function Document({ children }: { children: React.ReactNode }) {
   const defaultBgGradient =
     "bg-gradient-to-b from-orange-500 via-orange-700 to-orange-300";
 
-  const [state, formAction] = useFormState(changeTeam, null);
+  const [formState, formAction] = useFormState(changeTeam, null);
 
-  const showAllTeams = state?.team;
+  async function selectTeam(formData: FormData) {
+    const team = formData.get("team");
+    addOptimistic({ team });
+    await formAction(formData);
+  }
 
-  // TODO: Optimistically render the correct bg for better UX
+  const [optimisticState, addOptimistic] = useOptimistic(
+    formState,
+    (state, newState) => ({
+      ...state,
+      team: formState?.team || "all",
+    })
+  );
+
+  const showAllTeams = optimisticState?.team;
+
   const classNames = !!showAllTeams ? "bg-brand-bg" : defaultBgGradient;
 
   return (
@@ -21,7 +34,21 @@ export default function Document({ children }: { children: React.ReactNode }) {
         <nav>
           <h1>Baseline</h1>
           <div>
-            <SelectTeam teams={teams} formAction={formAction} />
+            <form action={selectTeam}>
+              <select
+                name="team"
+                onChange={(event) => event?.target?.form?.requestSubmit()}
+              >
+                <option key={`theme-no-team`} value={"all"}>
+                  All teams
+                </option>
+                {teams.map((team) => (
+                  <option key={`theme-${team.abbr}`} value={team.abbr}>
+                    {team.name}
+                  </option>
+                ))}
+              </select>
+            </form>
           </div>
         </nav>
       </header>
