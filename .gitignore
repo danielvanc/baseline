@@ -41,3 +41,6 @@ next-env.d.ts
 /playwright/.cache/
 
 .env
+
+/prisma/data.db
+/prisma/data.db-journal
