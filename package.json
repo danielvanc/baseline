@@ -6,6 +6,11 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
+    "prisma:studio": "npx prisma studio",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:pull": "npx prisma db pull",
+    "prisma:generate": "npx prisma generate",
+    "prisma:seed": "npx prisma db seed",
     "lint": "next lint",
     "test": "vitest",
     "test:e2e": "npx playwright test",
@@ -14,7 +19,10 @@
     "test:e2e:debug": "npx playwright test --debug"
   },
   "dependencies": {
+    "@epic-web/remember": "^1.1.0",
     "@headlessui/react": "^2.1.2",
+    "@prisma/client": "^5.17.0",
+    "chalk": "^5.3.0",
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -23,6 +31,7 @@
   "devDependencies": {
     "@conform-to/react": "^1.1.5",
     "@conform-to/zod": "^1.1.5",
+    "@faker-js/faker": "^8.4.1",
     "@playwright/test": "^1.45.2",
     "@testing-library/react": "^16.0.0",
     "@types/node": "^20",
@@ -33,6 +42,7 @@
     "eslint-config-next": "14.2.5",
     "jsdom": "^24.1.1",
     "postcss": "^8",
+    "prisma": "^5.17.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.3",
     "vitest": "^2.0.3"
