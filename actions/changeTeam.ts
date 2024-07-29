@@ -9,6 +9,7 @@ export async function changeTeam(prevState: any, formData: FormData) {
   const returnDefault = !parsed.success || team === "all";
 
   return {
-    team: returnDefault ? null : team,
+    ...prevState,
+    team: returnDefault ? "all" : team,
   };
 }

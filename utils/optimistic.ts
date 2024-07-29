@@ -3,7 +3,7 @@ import { useOptimistic } from "react";
 import { useFormState } from "react-dom";
 
 export function useChangeTheme() {
-  const [formState, formAction] = useFormState(changeTeam, null);
+  const [formState, formAction] = useFormState(changeTeam, "all");
 
   async function selectTeam(formData: FormData) {
     const team = formData.get("team") as string;
@@ -13,14 +13,14 @@ export function useChangeTheme() {
 
   const [optimisticState, addOptimistic] = useOptimistic(
     formState,
-    (prevState, newState: { team: string }) => ({
+    (prevState, { team }: { team: string }) => ({
       ...prevState,
-      team: newState?.team ?? "all",
+      team,
     })
   );
 
   return {
     action: selectTeam,
-    theme: optimisticState?.team ?? "all",
+    theme: optimisticState.team,
   };
 }
