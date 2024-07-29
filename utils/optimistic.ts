@@ -6,18 +6,21 @@ export function useChangeTheme() {
   const [formState, formAction] = useFormState(changeTeam, null);
 
   async function selectTeam(formData: FormData) {
-    const team = formData.get("team");
+    const team = formData.get("team") as string;
     addOptimistic({ team });
     formAction(formData);
   }
 
-  const [optimsticState, addOptimistic] = useOptimistic(formState, (state) => ({
-    ...state,
-    team: formState?.team || "all",
-  }));
+  const [optimisticState, addOptimistic] = useOptimistic(
+    formState,
+    (prevState, newState: { team: string }) => ({
+      ...prevState,
+      team: newState?.team ?? "all",
+    })
+  );
 
   return {
     action: selectTeam,
-    theme: optimsticState?.team,
+    theme: optimisticState?.team ?? "all",
   };
 }

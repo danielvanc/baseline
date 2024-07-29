@@ -16,6 +16,17 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      textColor: {
+        skin: {
+          base: "var(--color-text-primary)",
+          heading: "",
+        },
+      },
+      // backgroundColor: {
+      //   skin: {
+      //     bg: "var(--color-text-primary)",
+      //   },
+      // },
     },
   },
   plugins: [],

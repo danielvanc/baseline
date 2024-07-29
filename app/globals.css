@@ -12,6 +12,14 @@
   body {
     background: #fff;
   }
+  :root {
+    --color-text-primary: #dd0093;
+    --color-bg-primary: #fff;
+  }
+  .theme-PHX {
+    --color-text-primary: #000ddd;
+    --color-bg-primary: #000;
+  }
 }
 @layer utilities {
   .text-balance {

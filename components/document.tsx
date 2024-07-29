@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { teams } from "@/config/teams";
+import { teams, teamThemes } from "@/config/teams";
 import { useChangeTheme } from "@/utils/optimistic";
 interface Props {
   children: React.ReactNode;
@@ -8,14 +8,13 @@ interface Props {
 
 export default function Document({ children }: Props) {
   const { theme, action } = useChangeTheme();
-  const showAllTeams = theme;
-
-  const defaultBg =
-    "bg-gradient-to-b from-orange-500 via-orange-700 to-orange-300";
-  const classNames = !!showAllTeams ? "bg-brand-bg" : defaultBg;
+  const showAllTeams = theme === "all";
+  const themeClass = showAllTeams
+    ? ""
+    : teamThemes[theme as keyof typeof teamThemes];
 
   return (
-    <body className={`h-screen ${classNames}`}>
+    <body className={`h-screen ${themeClass}`}>
       <header>
         <nav>
           <h1>Baseline</h1>
