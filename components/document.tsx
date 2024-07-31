@@ -8,13 +8,17 @@ interface Props {
 
 export default function Document({ children }: Props) {
   const { theme, action } = useChangeTheme();
-  const showAllTeams = theme === "all";
-  const themeClass = showAllTeams
-    ? ""
-    : teamThemes[theme as keyof typeof teamThemes];
+  const [pageTheme, setPageTheme] = React.useState(theme);
+
+  React.useEffect(() => {
+    const showAllTeams = theme === "all";
+    setPageTheme(
+      showAllTeams ? "" : teamThemes[theme as keyof typeof teamThemes]
+    );
+  }, [theme]);
 
   return (
-    <body className={`h-screen ${themeClass}`}>
+    <body className={`h-screen ${pageTheme}`}>
       <header>
         <nav>
           <h1>Baseline</h1>

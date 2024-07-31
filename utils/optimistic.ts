@@ -21,6 +21,6 @@ export function useChangeTheme() {
 
   return {
     action: selectTeam,
-    theme: optimisticState.team,
+    theme: optimisticState.team ?? "all",
   };
 }
